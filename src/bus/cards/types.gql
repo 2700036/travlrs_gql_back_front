@@ -1,0 +1,16 @@
+type Card {
+  _id: ID!
+  name: String!
+  link: String!
+  owner: User!
+  likes: [User]!
+  createdAt: String!
+}
+
+input InputCard {  
+  name: String!
+  link: String!
+}
+
+
+
