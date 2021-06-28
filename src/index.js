@@ -21,10 +21,12 @@ const httpServer = http.createServer(app);
 const apolloServer = new ApolloServer({
   typeDefs: types,
   resolvers,  
+  introspection: true,
   context: ({req, res})=>{
     return {req, res}
   },
   playground: {
+    
     settings: {
       "request.credentials": "include"
     }
