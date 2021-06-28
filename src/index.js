@@ -1,15 +1,15 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import types from './types.gql';
-import { resolvers } from './resolvers';
+import types from './types.js';
+import { resolvers } from './resolvers.js';
 import cors from 'cors';
 import session from 'express-session';
-import { readToken } from './readToken';
-import { config } from './config';
+import { readToken } from './readToken.js';
+import { config } from './config.js';
 import mongoose from 'mongoose';
 import http from 'http';
-
+dotenv.config()
 
 const app = express();
 

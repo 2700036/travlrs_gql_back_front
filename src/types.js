@@ -1,6 +1,35 @@
-#import "./bus/cards/types.gql"
-#import "./bus/users/types.gql"
+import { gql } from "apollo-server-express"
 
+const types = gql`
+
+type User {
+  _id: ID!
+  name: String!
+  email: String!
+  password: String
+  about: String,
+  avatar: String,
+}
+
+input UserInput {  
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Card {
+  _id: ID!
+  name: String!
+  link: String!
+  owner: User!
+  likes: [User]!
+  createdAt: String!
+}
+
+input InputCard {  
+  name: String!
+  link: String!
+}
 
 type Query {
     cards: [Card!]!
@@ -23,3 +52,7 @@ type Subscription {
   cardUpdated: Card!  
   cardsChanged: [Card]!  
 }
+
+
+`
+export default types;
