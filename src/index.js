@@ -22,7 +22,7 @@ const apolloServer = new ApolloServer({
   typeDefs: types,
   resolvers,  
   introspection: true,
-  context: ({req, res})=>{
+  context: ({req, res})=>{  
     return {req, res}
   },
   playground: {
