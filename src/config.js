@@ -21,6 +21,7 @@ export const config = {
       httpOnly: true,
       maxAge: 15 * 60 *1000,
       sameSite: 'none',
+      secure: true
     },
   }
 }
