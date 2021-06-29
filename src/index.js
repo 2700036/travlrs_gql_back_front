@@ -14,7 +14,7 @@ dotenv.config()
 const app = express();
 
 app.use(session(config.sessionOptions));
-// app.use(cors(config.corsOptions));
+app.use(cors(config.corsOptions));
 app.use(readToken);
 const httpServer = http.createServer(app);
 
@@ -24,12 +24,6 @@ const apolloServer = new ApolloServer({
   introspection: true,
   context: ({req, res})=>{
     return {req, res}
-  },
-  cors: {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
   },
   playground: {
     
