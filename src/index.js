@@ -33,7 +33,7 @@ const apolloServer = new ApolloServer({
   }
 });
 
-apolloServer.applyMiddleware({ app, cors: false });
+apolloServer.applyMiddleware({ app });
 apolloServer.installSubscriptionHandlers(httpServer);
 
 mongoose.connect(config.mongo.url, {
