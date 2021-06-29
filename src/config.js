@@ -20,7 +20,7 @@ export const config = {
     cookie: {
       httpOnly: true,
       maxAge: 15 * 60 *1000,
-      
+      domain: '.herokuapp.com'
     },
   }
 }
