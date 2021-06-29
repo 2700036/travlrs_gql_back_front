@@ -8,7 +8,7 @@ export const config = {
     url: process.env.MONGO_DB_URI || 'mongodb://localhost:27017/TrvlrsGQL_DB'
   },
   corsOptions: {
-    origin: `http://localhost:${process.env.PORT || 4000}`,
+    origin: process.env.DOMAIN || `http://localhost:3000`,
     credentials: true,
   },
   sessionOptions: {
