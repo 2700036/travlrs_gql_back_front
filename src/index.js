@@ -14,7 +14,7 @@ dotenv.config()
 const app = express();
 
 app.use(session(config.sessionOptions));
-// app.use(cors(config.corsOptions));
+app.use(cors(config.corsOptions));
 app.use(readToken);
 const httpServer = http.createServer(app);
 
@@ -22,7 +22,6 @@ const apolloServer = new ApolloServer({
   typeDefs: types,
   resolvers,  
   introspection: true,
-  cors: false,
   context: ({req, res})=>{
     return {req, res}
   },
@@ -34,7 +33,7 @@ const apolloServer = new ApolloServer({
   }
 });
 
-apolloServer.applyMiddleware({ app  });
+apolloServer.applyMiddleware({ app, cors: false });
 apolloServer.installSubscriptionHandlers(httpServer);
 
 mongoose.connect(config.mongo.url, {
