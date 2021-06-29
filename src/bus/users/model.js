@@ -52,8 +52,8 @@ const findUserbyEmail = async (email) => {
 export const getUsers = async (ctx) => {
   const _id = ctx.req.userId;
   if(!_id)throw new AuthenticationError(`Authorization required!`) 
-  return await User.find({})  
-  // const Users = users.map(u => ({...u._doc, password: null}))
+  const users = await User.find({})  
+  const Users = users.map(u => ({...u._doc, password: null}))
     
   return Users
 }
@@ -62,9 +62,9 @@ export const getUserMe = async (ctx) => {
   if(!_id)throw new AuthenticationError(`Authorization required!`) 
   const user = await User.findById({_id})
   if(!user)throw AuthenticationError('User not found!');
-  // const newUser = {...user._doc, password: null}
-  // console.log('⚛️ : user', newUser)
-  return user
+  const newUser = {...user._doc, password: null}
+  console.log('⚛️ : user', newUser)
+  return newUser
 }
 
 export const signUp = async (user) => {  
@@ -81,10 +81,10 @@ export const signUp = async (user) => {
 export const login = async (email, password, ctx) => {
 
   const isUserExist = await findUserbyEmail(email)
+  if(!isUserExist) throw new AuthenticationError(`Неверная связка имени и пароля`)
   const isValidPassword = await bcrypt.compare(password, isUserExist.password);
-  // if(!isUserExist) throw new AuthenticationError(`Неверная связка имени и пароля`)
   
-  if(!isValidPassword && !isUserExist)throw new AuthenticationError(`Неверная связка имени и пароля`)
+  if(!isValidPassword)throw new AuthenticationError(`Неверная связка имени и пароля`)
 
   const token = jwt.sign({ userId: isUserExist._doc._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
