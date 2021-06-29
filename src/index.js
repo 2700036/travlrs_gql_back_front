@@ -14,7 +14,7 @@ dotenv.config()
 const app = express();
 
 app.use(session(config.sessionOptions));
-app.use(cors(config.corsOptions));
+// app.use(cors(config.corsOptions));
 app.use(readToken);
 const httpServer = http.createServer(app);
 
