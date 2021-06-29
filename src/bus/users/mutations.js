@@ -1,6 +1,6 @@
 import { pubSub } from "../../pubSub.js"
 import { events } from "./events.js"
-import { signUp, login } from "./model.js"
+import { signUp, login, updateUser } from "./model.js"
 
 export const mutations = {  
   
@@ -12,6 +12,7 @@ export const mutations = {
         return newUser
     },
     login: (_, {email, password}, ctx) => login(email, password, ctx),
+    updateUser: (_, {user}, ctx) => updateUser(user, ctx),
    
   
 }

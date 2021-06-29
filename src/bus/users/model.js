@@ -77,8 +77,23 @@ export const getUserMe = async (ctx) => {
   if(!_id)throw new AuthenticationError(`Authorization required!`) 
   const user = await User.findById({_id})
   if(!user)throw AuthenticationError('User not found!');
-  const newUser = {...user._doc, password: null}
-  console.log('⚛️ : user', newUser)
+  const newUser = {...user._doc, password: null}  
+  return newUser
+}
+export const updateUser = async (user, ctx) => {
+  const _id = ctx.req.userId;
+  if(!_id)throw new AuthenticationError(`Authorization required!`) 
+  
+  const boolUserProps = {}
+  for (let key in user){
+    if (user[key])boolUserProps[key] = user[key]
+    
+    
+  }
+  
+  const updatedUser = await User.findByIdAndUpdate(_id, {...boolUserProps}, options)
+  
+  const newUser = {...updatedUser._doc, password: null}  
   return newUser
 }
 
@@ -103,6 +118,6 @@ export const login = async (email, password, ctx) => {
 
   const token = jwt.sign({ userId: isUserExist._doc._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
   
-  
+  ctx.req.session.token = token;
   return {...isUserExist._doc, password: null, token}
 }
