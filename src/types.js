@@ -35,6 +35,7 @@ type Query {
     cards: [Card!]!
     card(id: ID!): Card!  
     users: [User!]!
+    me: User!
   }
 
 type Mutation {
