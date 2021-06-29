@@ -52,8 +52,8 @@ const findUserbyEmail = async (email) => {
 export const getUsers = async (ctx) => {
   const _id = ctx.req.userId;
   if(!_id)throw new AuthenticationError(`Authorization required!`) 
-  const users = await User.find({})  
-  const Users = users.map(u => ({...u._doc, password: null}))
+  return await User.find({})  
+  // const Users = users.map(u => ({...u._doc, password: null}))
     
   return Users
 }
@@ -62,9 +62,9 @@ export const getUserMe = async (ctx) => {
   if(!_id)throw new AuthenticationError(`Authorization required!`) 
   const user = await User.findById({_id})
   if(!user)throw AuthenticationError('User not found!');
-  const newUser = {...user._doc, password: null}
-  console.log('⚛️ : user', newUser)
-  return newUser
+  // const newUser = {...user._doc, password: null}
+  // console.log('⚛️ : user', newUser)
+  return user
 }
 
 export const signUp = async (user) => {  
