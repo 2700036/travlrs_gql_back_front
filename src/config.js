@@ -18,9 +18,8 @@ export const config = {
     rolling: true,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
       maxAge: 15 * 60 *1000,
-      domain: 'https://travlrs-gql-front.herokuapp.com'
+      
     },
   }
 }

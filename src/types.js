@@ -11,6 +11,16 @@ type User {
   avatar: String,
 }
 
+type UserToken {
+  _id: ID!
+  name: String!
+  email: String!
+  password: String
+  about: String,
+  avatar: String,
+  token: String
+}
+
 input UserInput {  
   name: String!
   email: String!
@@ -45,7 +55,7 @@ type Mutation {
   putLikeToCard(id: ID): Card!
   deleteLikeFromCard(id: ID): Card!
   signUp(user: UserInput): User!
-  login(email: String!, password: String!): User!
+  login(email: String!, password: String!): UserToken!
 }
 
 type Subscription { 

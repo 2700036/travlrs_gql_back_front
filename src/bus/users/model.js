@@ -32,7 +32,22 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minlength: 8
-    }
+    },
+    about: {
+      type: String,    
+      maxlength: 30,
+      default: 'Турист'
+    },
+    avatar: {
+      type: String,
+      validate: {
+        validator: v=> {
+            return /^(http:\/\/|https:\/\/)(www.)?\S{1,256}/.test(v)
+        },    
+      message: 'Cсылка неверного формата'
+      },
+      default: 'https://image.freepik.com/free-vector/backpack-traveler-tourist-back-cartoon_18591-60441.jpg'
+    } 
     
   },
   {
@@ -88,6 +103,6 @@ export const login = async (email, password, ctx) => {
 
   const token = jwt.sign({ userId: isUserExist._doc._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
   
-  ctx.req.session.token = token;
-  return isUserExist
+  
+  return {...isUserExist._doc, password: null, token}
 }
