@@ -5,10 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "clean": "rm -rf ./node_modules/.cache/babel-loader"
+    "frontend": "cd client && npm start",
+    "server": "nodemon ./src/index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run frontend\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+    
   },
   "author": "",
   "license": "ISC",
