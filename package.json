@@ -8,7 +8,7 @@
     "frontend": "cd client && npm start",
     "api": "nodemon ./src/index.js",
     "dev": "concurrently \"npm run api\" \"npm run frontend\"",
-    
+    "start": "node ./src/index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
     
   },
