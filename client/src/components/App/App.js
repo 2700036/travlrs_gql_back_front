@@ -39,7 +39,11 @@ const App = () => {
       >
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
-        <Route path='/'>{loggedIn && userInfo ? <Main /> : <Spinner />}</Route>
+        <Route path='/'>{
+        !loggedIn 
+        ? <Redirect to='/login'/> 
+        : loggedIn && userInfo 
+        ? <Main /> : <Spinner />}</Route>
       </AnimatedSwitch>
       <Footer />
       {openedPopup.isLoginStatusPopupOpen && <InfoTooltip name='tooltip' />}
