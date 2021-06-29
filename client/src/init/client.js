@@ -4,12 +4,12 @@ import { ApolloClient } from 'apollo-client';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
-const root = 'travlrs-gql.herokuapp.com/graphql';
-const uri = `https://${root}`;
+const root = process.env.NODE_ENV === 'development' ? 'localhost:4000/graphql' : 'travlrs-gql.herokuapp.com/graphql';
+const uri = `http${process.env.NODE_ENV === 'development' ? '' : 's'}://${root}`;
 const httpLink = createHttpLink({ uri, credentials: 'include'
 });
 const wsLink = new WebSocketLink({
-  uri: `wss://${root}`,
+  uri: `ws${process.env.NODE_ENV === 'development' ? '' : 's'}://${root}`,
   options: {
     reconnect: true,
   },

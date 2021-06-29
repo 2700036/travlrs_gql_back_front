@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js",
+    "frontend": "cd client && npm start",
+    "api": "nodemon ./src/index.js",
+    "dev": "concurrently \"npm run api\" \"npm run frontend\"",
+    
     "heroku-postbuild": "cd client && npm install && npm run build"
     
   },
