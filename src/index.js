@@ -21,9 +21,7 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 app.use(session(config.sessionOptions));
 app.use(cors(config.corsOptions));
 app.use(readToken);
-app.get('/graphql', (req, res) => {
-  
-})
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
