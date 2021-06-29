@@ -1,0 +1,19 @@
+.card__title {
+  max-width: 220px;
+    font-size: 22px;
+    line-height: 29px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+}
+.card__about {
+  max-width: 220px;
+  font-size: 18px;
+  line-height: 29px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  
+  margin: 0;
+}

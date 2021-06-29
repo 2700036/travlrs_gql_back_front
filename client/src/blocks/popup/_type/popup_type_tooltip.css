@@ -1,0 +1,6 @@
+.popup_type_tooltip .popup__content {
+  display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 20px;
+}

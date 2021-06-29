@@ -1,0 +1,8 @@
+.card__like-button_is-active {
+  background: transparent url('../../../../images/like-active.svg') no-repeat;
+  filter: drop-shadow(0px 0px 4px #ffffffb4);
+}
+
+.card__like-button_is-active:hover {
+  filter: drop-shadow(0px 0px 6px white);
+}

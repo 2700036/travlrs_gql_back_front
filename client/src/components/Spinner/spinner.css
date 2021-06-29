@@ -1,0 +1,52 @@
+#spinner {
+  width: 75px;
+  height: 75px;
+  position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 50;
+}
+.animated-logo {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  transform: scale(0.7);
+  clip-path: circle(30%);
+  opacity: 0;
+  animation-timing-function: ease-in-out;
+  animation: spinner 3000ms infinite;
+  animation-direction: forwards;
+}
+.animated-logo path, .animated-logo ellipse {
+  fill: #F97D2B;
+}
+.animated-logo-2 {
+  animation-delay: 900ms;
+}
+.animated-logo-3 {
+  animation-delay: 1900ms;
+}
+@keyframes spinner {
+  0% {
+    transform: scale(0.7) rotate(0deg);
+    clip-path: circle(25%);
+    opacity: 0;
+ }
+  9% {
+    clip-path: circle(100%);
+    opacity: 1;
+ }
+  18% {
+    transform: scale(0.7) rotate(360deg);
+ }
+  33% {
+    transform: scale(0.7) rotate(360deg);
+    clip-path: circle(100%);
+    opacity: 1;
+ }
+  45% {
+    transform: scale(0.7) rotate(520deg);
+    clip-path: circle(25%);
+    opacity: 0;
+ }
+}

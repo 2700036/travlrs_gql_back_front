@@ -9,13 +9,22 @@ import { readToken } from './readToken.js';
 import { config } from './config.js';
 import mongoose from 'mongoose';
 import http from 'http';
+import path from 'path';
+
 dotenv.config()
+const __dirname = path.resolve(path.dirname(''));
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use(session(config.sessionOptions));
 app.use(cors(config.corsOptions));
 app.use(readToken);
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/client/build/index.html'))
+// })
+
 const httpServer = http.createServer(app);
 
 const apolloServer = new ApolloServer({

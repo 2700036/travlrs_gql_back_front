@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/index.js",
-    "dev": "npm run clean && nodemon ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "clean": "rm -rf ./node_modules/.cache/babel-loader"
   },
   "author": "",

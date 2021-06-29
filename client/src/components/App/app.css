@@ -1,0 +1,33 @@
+a {
+  border: none;
+  text-decoration: none
+}
+
+body
+
+.tabs {
+  color: #fff;
+  display: flex;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 20px;
+  
+}
+
+.tab {
+  padding: 7px 20px;
+  border: solid 1px rgb(184, 184, 184);
+  color: rgb(184, 184, 184);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 15px;
+  margin-right: 4px;
+  border-bottom: none;
+  background: linear-gradient(to bottom, rgb(31, 31, 31) 50%, #07070700);
+  transition: transform 0.2s ease;
+}
+
+.tab_active {
+  transform: scale(1.2);
+  color: #fff;
+  background: linear-gradient(to bottom, #8AA32F 90%, #07070700);
+  border-bottom: none;
+}

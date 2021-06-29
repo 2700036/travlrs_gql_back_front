@@ -1,0 +1,19 @@
+.card__image {
+  min-height: 260px;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+.card__image-blur {
+  position: absolute;
+  background-size: cover;
+    width: 100%;
+    bottom: -196px;
+    filter: blur(20px);
+    z-index: 5;
+    left: 0;
+    height: 300px;
+    transform: scaleY(-1);
+}
