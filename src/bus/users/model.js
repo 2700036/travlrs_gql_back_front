@@ -87,7 +87,7 @@ export const login = async (email, password, ctx) => {
   if(!isValidPassword)throw new AuthenticationError(`Неверная связка имени и пароля`)
 
   const token = jwt.sign({ userId: isUserExist._doc._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
+  
   ctx.req.session.token = token;
   return isUserExist
 }
