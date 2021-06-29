@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
