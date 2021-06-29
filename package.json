@@ -5,10 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "frontend": "cd client && npm start",
-    "server": "nodemon ./src/index.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run frontend\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     
   },
   "author": "",
