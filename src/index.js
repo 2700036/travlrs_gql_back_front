@@ -22,9 +22,11 @@ app.use(session(config.sessionOptions));
 app.use(cors(config.corsOptions));
 app.use(readToken);
 
-app.get('*', (req, res) => {
+if (process.env.NODE_ENV !== 'development'){
+  app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
+}
 
 const httpServer = http.createServer(app);
 

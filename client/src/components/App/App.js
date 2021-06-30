@@ -23,10 +23,10 @@ const App = () => {
   React.useEffect(() => {
     if (loggedIn)getMe()
   
-    console.log('⚛️ : queryUser', queryUser)
     
     
   }, [loggedIn]);
+  console.log('⚛️ : queryUser', queryUser)
 
   return (
     <>
