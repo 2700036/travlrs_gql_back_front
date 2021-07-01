@@ -1,16 +1,20 @@
 /* eslint-disable default-case */
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import useTravlrsApi from '../../hooks/useTravlrsApi';
+import { useMutationAddCard } from '../../hooks/useMutationAddCard';
+import { useActions } from '../../reducers/useActions';
 
 const PlaceForm = () => {
   const { handleSubmit, register, errors } = useForm({
     mode: 'onChange',
   });
-  const {onAddCardSubmit} = useTravlrsApi();
+  const { closePopups } = useActions();
+  const {addNewCard, cards, errors: errorsAddCard, loading} = useMutationAddCard();
   const handleData = (data) => {
-    onAddCardSubmit(data);
+    addNewCard(data).then(()=>closePopups()).catch(e => {      
+    });    
   };
+
 
   return (
     <form onSubmit={handleSubmit(handleData)} className='popup__form' noValidate>
@@ -68,7 +72,7 @@ const PlaceForm = () => {
         type='submit'
         className={`button popup__button ${errors.link || errors.name ? 'popup__button_disabled' : 0}`}
       >
-        Сохранить
+        {loading ? 'Загрузка...' : 'Сохранить'}
       </button>
     </form>
   );

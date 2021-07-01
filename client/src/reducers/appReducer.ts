@@ -22,7 +22,7 @@ const initialState: AppState = {
     isLoginStatusPopupOpen: false
   },
   selectedCard: null,
-  userInfo: null,  
+  userInfo: {userName: '', userDescription: '', userAvatar: '', userId: ''},  
 };
 
 export default (state = initialState, action: AppActionTypes): AppState => {
@@ -30,7 +30,7 @@ export default (state = initialState, action: AppActionTypes): AppState => {
     case LOG_IN:
       return { ...state, loggedIn: true };
     case LOG_OUT:
-      return { ...state, loggedIn: false, userInfo: null };
+      return { ...state, loggedIn: false, userInfo: {userName: '', userDescription: '', userAvatar: '', userId: ''} };
     case UPDATE_AUTH_STATUS:
       return { ...state, 
         authStatus: action.payload,

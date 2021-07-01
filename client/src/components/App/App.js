@@ -2,49 +2,27 @@ import React from 'react';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import Spinner from '../Spinner/Spinner';
+import { Route, Redirect, Switch } from 'react-router-dom';
+
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import { useSelector } from 'react-redux';
-import useTravlrsApi from '../../hooks/useTravlrsApi';
-import './app.css';
-import { AnimatedSwitch } from 'react-router-transition';
-import { useQueryMe } from '../../hooks/useQueryMe';
 
+import './app.css';
 
 
 const App = () => {
-  const { loggedIn, userInfo, openedPopup } = useSelector(({ app }) => app);
-  const { loginCheck } = useTravlrsApi();
-  const {getMe, user: queryUser} = useQueryMe()
-  
-  React.useEffect(() => {
-    if (loggedIn)getMe()
-  
-    
-    
-  }, [loggedIn]);
-  console.log('⚛️ : queryUser', queryUser)
+  const { loggedIn, openedPopup } = useSelector(({ app }) => app);
 
   return (
     <>
       <Header />
-      <AnimatedSwitch
-      atEnter={{ opacity: 0 }}
-      atLeave={{ opacity: 0 }}
-      atActive={{ opacity: 1 }}
-      className="switch-wrapper"
-      >
+      <Switch>
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
-        <Route path='/'>{
-        !loggedIn 
-        ? <Redirect to='/login'/> 
-        : loggedIn && userInfo 
-        ? <Main /> : <Spinner />}</Route>
-      </AnimatedSwitch>
+        <Route path='/'>{loggedIn ? <Main /> : <Redirect to='/login' />}</Route>
+      </Switch>
       <Footer />
       {openedPopup.isLoginStatusPopupOpen && <InfoTooltip name='tooltip' />}
     </>

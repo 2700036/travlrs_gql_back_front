@@ -1,5 +1,5 @@
 import { User } from './../types';
-import { gql, useLazyQuery } from "@apollo/react-hooks";
+import { gql, useQuery } from "@apollo/react-hooks";
 
 type QueryMe = {
   me: User
@@ -16,8 +16,8 @@ const queryMe = gql`
 `
 
 export const useQueryMe = () => {
-  const [getMe, {data, error, loading}] = useLazyQuery<QueryMe>(queryMe)
+  const {data, error, loading, refetch} = useQuery<QueryMe>(queryMe)
   
 
-  return {getMe, user: data && data.me, error, loading}
+  return {user: data && data.me, error: error && error.toString(), loading: loading}
 }

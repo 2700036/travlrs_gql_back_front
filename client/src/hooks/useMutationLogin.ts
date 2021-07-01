@@ -24,9 +24,7 @@ const mutationLogin = gql`
 
 export const useMutationLogin = () => {
   const [loginMutation, {data, error, loading}] = useMutation<QueryMe>(mutationLogin);
-  if(data && data.login && data.login.token){
-    document.cookie = `token=${encodeURIComponent(data.login.token)}`
-  }
+  
   const handleLogin = (credentials: Credentials) => {
     return loginMutation({ 
       variables: credentials

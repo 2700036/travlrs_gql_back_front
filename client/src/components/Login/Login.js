@@ -37,7 +37,7 @@ const Login = ({ history }) => {
         history.push('/');
       })
       .catch((error) => {
-        // updateAuthStatus({error: error});
+        updateAuthStatus({error: error.toString()});
         console.log(error);
       });
 
