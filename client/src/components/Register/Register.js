@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutationLogin } from '../../hooks/useMutationLogin';
 import { useMutationSignUp } from '../../hooks/useMutationSignUp';
@@ -7,9 +7,9 @@ import travlrsApi from '../../utils/travlrsApi';
 import '../Login/login.css';
 
 const Register = ({ history }) => {
-  const { handleSignUp, user, error, loading } = useMutationSignUp();
-  const { handleLogin } = useMutationLogin();
-  const { logIn, updateAuthStatus } = useActions();
+  const { handleSignUp, error, loading } = useMutationSignUp();
+  const { handleLogin, user } = useMutationLogin();
+  const { logIn, updateAuthStatus, updateUserInfo } = useActions();
   const [userData, setUserData] = useState({
     email: '',
     password: '',
@@ -38,6 +38,19 @@ const Register = ({ history }) => {
         updateAuthStatus({ error: err.toString() });
       });
   };
+
+  useEffect(() => {
+    if(user){
+    
+      updateUserInfo({
+        userName: user.name,
+        userDescription: user.about,
+        userAvatar: user.avatar,
+        userId: user._id,
+        userEmail: user.email,
+      });
+    }
+  }, [user])
 
   return (
     <div className='login'>

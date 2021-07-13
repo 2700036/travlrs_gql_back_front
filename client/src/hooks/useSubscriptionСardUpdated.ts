@@ -24,7 +24,7 @@ const subscriptionСardUpdated = gql`
 
 export const useSubscriptionСardUpdated = () => {
   const { data, error, loading } = useSubscription<Card>(subscriptionСardUpdated); 
-  console.log('⚛️ : data', data)
+
   
   return { likedCard: data && data.cardUpdated, error: error && error.toString(), loading };
 };
