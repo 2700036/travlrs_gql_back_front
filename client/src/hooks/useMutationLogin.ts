@@ -18,6 +18,7 @@ const mutationLogin = gql`
       avatar
       email
       token
+      _id
     }
   }
 `

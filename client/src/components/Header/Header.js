@@ -9,7 +9,7 @@ const Header = () => {
   const {logOut} = useActions();
   const history = useHistory();
   function signOut() {
-    localStorage.removeItem("jwt");
+    document.cookie = 'token=; Max-Age=-99999999;'; 
     logOut();
     
     history.push("/login");

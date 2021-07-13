@@ -5,10 +5,8 @@ type QueryCard = {
   addCard: PlaceCard[]
 }
 
-type QueryVariables = {
-   
-    card: InputCard
-  
+type QueryVariables = {   
+    card: InputCard  
 }
 
 type InputCard = {

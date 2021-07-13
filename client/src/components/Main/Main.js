@@ -12,44 +12,56 @@ import { useActions } from '../../reducers/useActions';
 import List from '../List/List';
 import useTravlrsApi from '../../hooks/useTravlrsApi';
 import { AnimatedSwitch } from 'react-router-transition';
-import { useQueryMe } from '../../hooks/useQueryMe';
 import { useCardsActions } from '../../reducers/useCardsActions';
 import { useQueryCards } from '../../hooks/useQueryCards';
 import Spinner from '../Spinner/Spinner';
 import { useQueryUsers } from '../../hooks/useQueryUsers';
+import { useSubscriptionCardsChanged } from '../../hooks/useSubscriptionCardsChanged';
+import { useMutationDeleteCard } from '../../hooks/useMutationDeleteCard';
+import { useSubscriptionСardUpdated } from '../../hooks/useSubscriptionСardUpdated';
 
 const Main = () => {
-  const { updateUserInfo, openEditProfilePopup, openAddPlacePopup, openEditAvatarPopup } = useActions();
+  const {  openEditProfilePopup, openAddPlacePopup, openEditAvatarPopup, closePopups } = useActions();
   const { cardsFill, usersFill } = useCardsActions();
 
   const {
     userInfo: { userName, userDescription, userAvatar, userId },
     openedPopup,
+    selectedCard
   } = useSelector(({ app }) => app);
-  const { cards, users } = useSelector(({ cards }) => cards);
-  const { onDeleteCardSubmit } = useTravlrsApi();
+  const { cards, users } = useSelector(({ cards }) => cards); 
 
-  const { user, error: errorMe, loading: loadingMe } = useQueryMe();
-  const { cards: cardsReq, error: errorCards, loading: loadingCards } = useQueryCards();
-  const { users: usersReq, error: errorUsers, loading: loadingUsers } = useQueryUsers();
+  const { cards: cardsReq, loading: loadingCards } = useQueryCards();
+  const { users: usersReq, loading: loadingUsers } = useQueryUsers();
+const {cards: updatedCards, loading} = useSubscriptionCardsChanged()
+const { likedCard } = useSubscriptionСardUpdated();
+
+const {deleteCardById,
+  deletedCard,
+  error,
+  loading: deletingCard} = useMutationDeleteCard()
 
   useEffect(() => {
-    if (user) {
-      updateUserInfo({
-        userName: user.name,
-        userDescription: user.about,
-        userAvatar: user.avatar,
-        userId: user._id,
-        userEmail: user.email,
-      });
+    if (likedCard) {
+      
+      const newCards = cardsReq
+      const cardIdx = cards.findIndex(card => card._id === likedCard._id)
+      newCards[cardIdx] = likedCard
+  
+      cardsFill(newCards);
     }
-  }, [user]);
+  }, [likedCard]);
 
   useEffect(() => {
     if (cardsReq) {
       cardsFill(cardsReq);
     }
   }, [cardsReq]);
+  useEffect(() => {
+    if (updatedCards) {
+      cardsFill(updatedCards);
+    }
+  }, [updatedCards]);
   useEffect(() => {
     if (usersReq) {
       usersFill(usersReq);
@@ -62,10 +74,16 @@ const Main = () => {
       return b.likes.length - a.likes.length;
     });
 
+  const submitCardDelete = (e) => {
+      e.preventDefault();
+      deleteCardById(selectedCard?._id)
+      closePopups()
+    }
+
   return (
     <>
       <main className='content'>
-        {(loadingCards || loadingMe) && <Spinner />}
+        {(loadingCards || loadingUsers) && <Spinner />}
         {userName && (
           <>
             <section className='profile page__section'>
@@ -145,8 +163,8 @@ const Main = () => {
       {openedPopup.isDeleteCardPopupOpened && (
         <PopupWithForm title='Вы уверены?' name='remove-card'>
           <form className='popup__form' name='remove-card' noValidate>
-            <button type='submit' className='button popup__button' onClick={onDeleteCardSubmit}>
-              Да
+            <button type='submit' className='button popup__button' onClick={submitCardDelete}>
+              {deletingCard ? '...' : 'Да'}
             </button>
           </form>
         </PopupWithForm>

@@ -11,6 +11,7 @@ const queryMe = gql`
       name
       email
       about
+      avatar
     }
   }
 `

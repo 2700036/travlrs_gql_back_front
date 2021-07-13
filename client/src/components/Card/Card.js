@@ -4,18 +4,28 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCardsActions } from '../../reducers/useCardsActions';
 import { useActions } from '../../reducers/useActions';
+import { useMutationsLikeCard } from '../../hooks/useMutationsLikeCard';
 
 const Card = ({ card }) => {
-  const { name, link, likes, owner, _id } = card;
-  const { updateLikeCard } = useCardsActions();
+  const { name, link, likes, owner, _id } = card;  
+  
   const { openDeleteCardConfirmPopup } = useActions();
   const {
     userInfo: { userId },
   } = useSelector(({ app }) => app);
+  // console.log('⚛️ : userId', userId)
+  // console.log('⚛️ : likes', likes)
   const history = useHistory();  
-  const isLiked = likes.some((like) => like._id === userId);
+  const isLiked = likes.some((like) => {
+    
+   return like._id === userId
+  });
+ 
   const isUsersCard = userId === owner._id;
+  const { handleLike } = useMutationsLikeCard()
+  
   const onBasketClick=(e) => {
+  
     e.stopPropagation();
     openDeleteCardConfirmPopup(card);
   }
@@ -23,11 +33,7 @@ const Card = ({ card }) => {
   //     return acc += i === 0 ? cur.name : `, ${cur.name}`
   //   }, '')
 
-  const handleLike = (cardId, like) => {
-    travlrsApi.changeLikeCardStatus(cardId, like).then((res) => {
-      updateLikeCard(res);
-    });
-  };
+
 
   return (
     <li className='places__item card'>
@@ -47,7 +53,7 @@ const Card = ({ card }) => {
             className={`card__like-button ${isLiked ? 'card__like-button_is-active ' : ''}`}
             onClick={(e) => {
               e.stopPropagation();
-              handleLike(_id, !isLiked);
+              handleLike(_id, isLiked);
             }}
           ></button>
           <p className='card__like-count'>{likes.length || 0}</p>

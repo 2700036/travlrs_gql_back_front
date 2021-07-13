@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMutationLogin } from '../../hooks/useMutationLogin';
+import { useMutationSignUp } from '../../hooks/useMutationSignUp';
 import { useActions } from '../../reducers/useActions';
 import travlrsApi from '../../utils/travlrsApi';
 import '../Login/login.css';
 
-const Register = ({history}) => {
-  
+const Register = ({ history }) => {
+  const { handleSignUp, user, error, loading } = useMutationSignUp();
+  const { handleLogin } = useMutationLogin();
   const { logIn, updateAuthStatus } = useActions();
   const [userData, setUserData] = useState({
     email: '',
@@ -17,17 +20,23 @@ const Register = ({history}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    travlrsApi.register(userData.email, userData.password, userData.name).then((res) => {
-      if (res) {
-        updateAuthStatus(res);
-        travlrsApi.authorize(userData.email, userData.password).then((res) => {
-          logIn();
-          history.push('/');
-        });
-      } else {
-        console.log('Произошла ошибка.');
-      }
-    });
+    handleSignUp(userData)
+      .then((res) => {
+        updateAuthStatus({ name: 'Вы успешно зарегистрированны!' });
+        handleLogin({ email: userData.email, password: userData.password })
+          .then((data) => {
+            setUserData({ email: '', password: '' });
+            logIn();
+            history.push('/');
+          })
+          .catch((error) => {
+            updateAuthStatus({ error: error.toString() });
+            console.log(error);
+          });
+      })
+      .catch((err) => {
+        updateAuthStatus({ error: err.toString() });
+      });
   };
 
   return (

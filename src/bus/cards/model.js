@@ -104,7 +104,7 @@ export const deleteLikeFromCard = async (id, ctx) => {
   const _id = ctx.req.userId;
   if(!_id)throw new AuthenticationError(`Authorization required!`)  
   try {
-    return await Card.findByIdAndUpdate(id, { $pull: { likes: _id }}, { new: true })
+    return await Card.findByIdAndUpdate(id, { $pull: { likes: _id }}, { new: true }).populate('owner', '_id name about avatar').populate('likes', '_id name about avatar')
        
   } catch (err) {
     throw new ApolloError(err);

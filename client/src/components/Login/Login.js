@@ -8,31 +8,30 @@ import { useMutationLogin } from '../../hooks/useMutationLogin';
 
 const Login = ({ history }) => {
   const { loggedIn, userInfo } = useSelector(({ app }) => app);
-  const { logIn, updateAuthStatus } = useActions();
+  const { logIn, updateAuthStatus, updateUserInfo } = useActions();
   const [userData, setUserData] = useState({
     email: '',
     password: '',
   });
-  const { handleLogin, user, loading, error } = useMutationLogin();
-
-
+  const { handleLogin, user, loading, error } = useMutationLogin();  
   
-
+  
   const handleChange = ({ target: { name, value } }) => {
     setUserData((userData) => ({ ...userData, [name]: value }));
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!userData.email || !userData.password) {
       return;
     }
-
+    
     handleLogin(userData)
-      .then((data) => {
-        // console.log('⚛️ : data', data)
+    .then((data) => {
+         
+        
         setUserData({ email: '', password: '' });
-
+        
         logIn();
         history.push('/');
       })
@@ -43,6 +42,20 @@ const Login = ({ history }) => {
 
 
   };
+  useEffect(() => {
+    if(user){
+    
+      updateUserInfo({
+        userName: user.name,
+        userDescription: user.about,
+        userAvatar: user.avatar,
+        userId: user._id,
+        userEmail: user.email,
+      });
+    }
+  }, [user])
+
+  
 
   return loggedIn && userInfo ? (
     <Redirect to='/' />
